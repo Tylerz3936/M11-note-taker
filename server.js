@@ -10,6 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
+
+
 const dbPath = path.join(__dirname, 'db', 'db.json');
 
 // Promisify readFile and writeFile
@@ -96,6 +98,8 @@ app.delete('/api/notes/:id', (req, res) => {
     res.json({ message: 'Note deleted successfully' });
   });
 });
+
+
 
 // Update note endpoint
 app.put('/api/notes/:id', (req, res) => {
