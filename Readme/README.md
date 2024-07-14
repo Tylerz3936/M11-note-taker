@@ -29,6 +29,7 @@ The Note Taker Application is a simple web app that allows users to create, upda
 ![alt text](image.png)
 ![alt text](image-1.png)
 <video controls src="m11-walktrhough.mp4" title="Title"></video>
+    
 # Deployed Application
 
 
