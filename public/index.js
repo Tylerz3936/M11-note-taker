@@ -6,13 +6,7 @@ let newNoteBtn;
 let clearBtn;
 let noteList;
 
-// Transition from index.html to notes.html
-if (window.location.pathname === '/') {
-  document.getElementById('get-started').addEventListener('click', function(event) {
-    event.preventDefault();
-    window.location.href = '/notes';
-  });
-}
+
 
 if (window.location.pathname === '/notes') {
   noteForm = document.querySelector('.note-form');
