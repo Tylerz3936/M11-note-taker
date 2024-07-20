@@ -6,7 +6,12 @@ const PORT = 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('./public'));
+app.use(express.static('public')); // Serve static files from the 'public' directory
+
+// Serve index.html from the root directory
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Routers
 const apiRoutes = require('./routes/apiRoutes');

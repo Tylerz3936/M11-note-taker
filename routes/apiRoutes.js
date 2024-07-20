@@ -54,6 +54,18 @@ const features = {
     return this.getNotes()
       .then((notes) => notes.filter((note) => note.id !== id))
       .then((filteredNotes) => this.write(filteredNotes));
+  },
+  updateNote(id, updatedNote) {
+    return this.getNotes()
+      .then((notes) => {
+        const noteIndex = notes.findIndex(note => note.id === id);
+        if (noteIndex !== -1) {
+          notes[noteIndex] = updatedNote;
+          return this.write(notes).then(() => updatedNote);
+        } else {
+          throw new Error('Note not found');
+        }
+      });
   }
 };
 
@@ -77,20 +89,11 @@ router.delete('/notes/:id', (req, res) => {
     .catch((err) => res.status(500).json({ error: 'Failed to delete note', details: err.message }));
 });
 
-// Update note endpoint
+// PUT route for updating notes
 router.put('/notes/:id', (req, res) => {
   const noteId = req.params.id;
   const updatedNote = req.body;
-  features.getNotes()
-    .then((notes) => {
-      let noteIndex = notes.findIndex(note => note.id === noteId);
-      if (noteIndex !== -1) {
-        notes[noteIndex] = updatedNote;
-        return features.write(notes).then(() => updatedNote);
-      } else {
-        throw new Error('Note not found');
-      }
-    })
+  features.updateNote(noteId, updatedNote)
     .then((note) => res.json(note))
     .catch((err) => res.status(500).json({ error: 'Failed to update note', details: err.message }));
 });
