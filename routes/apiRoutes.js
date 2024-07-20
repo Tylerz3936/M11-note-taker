@@ -11,15 +11,6 @@ const dbPath = path.join(__dirname, '../db/db.json');
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-// Load notes from db.json
-let notes;
-try {
-  notes = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-} catch (error) {
-  console.error('Error reading db.json:', error);
-  notes = [];
-}
-
 // Features object
 const features = {
   read() {
@@ -71,12 +62,14 @@ const features = {
 
 // API Routes
 router.get('/notes', (req, res) => {
+  console.log('GET /api/notes called');
   features.getNotes()
     .then((notes) => res.json(notes))
     .catch((err) => res.status(500).json({ error: 'Failed to get notes', details: err.message }));
 });
 
 router.post('/notes', (req, res) => {
+  console.log('POST /api/notes called');
   features.addNote(req.body)
     .then((note) => res.json(note))
     .catch((err) => res.status(500).json({ error: 'Failed to add note', details: err.message }));
@@ -84,15 +77,16 @@ router.post('/notes', (req, res) => {
 
 router.delete('/notes/:id', (req, res) => {
   const noteId = req.params.id;
+  console.log(`DELETE /api/notes/${noteId} called`);
   features.removeNote(noteId)
     .then(() => res.json({ message: 'Note deleted successfully' }))
     .catch((err) => res.status(500).json({ error: 'Failed to delete note', details: err.message }));
 });
 
-// PUT route for updating notes
 router.put('/notes/:id', (req, res) => {
   const noteId = req.params.id;
   const updatedNote = req.body;
+  console.log(`PUT /api/notes/${noteId} called`);
   features.updateNote(noteId, updatedNote)
     .then((note) => res.json(note))
     .catch((err) => res.status(500).json({ error: 'Failed to update note', details: err.message }));
