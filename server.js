@@ -6,7 +6,7 @@ const PORT = 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public')); // Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the 'public' directory
 
 // Serve index.html from the root directory
 app.get('/', (req, res) => {
