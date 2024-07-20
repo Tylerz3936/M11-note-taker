@@ -10,7 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
-
+// Serve index.html from the root directory
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 const dbPath = path.join(__dirname, 'db', 'db.json');
 
@@ -134,7 +137,7 @@ app.get('/notes', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, './index.html'));
 });
 
 app.listen(PORT, () => {
